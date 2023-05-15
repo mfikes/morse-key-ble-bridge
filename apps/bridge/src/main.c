@@ -24,7 +24,9 @@
 #include <zephyr/bluetooth/uuid.h>
 #include <zephyr/bluetooth/gatt.h>
 
+#if CONFIG_BT_BAS
 #include <zephyr/bluetooth/services/bas.h>
+#endif
 #include <bluetooth/services/hids.h>
 #include <zephyr/bluetooth/services/dis.h>
 #include <dk_buttons_and_leds.h>
@@ -915,7 +917,7 @@ static void configure_gpio(void)
 	}
 }
 
-
+#if CONFIG_BT_BAS
 static void bas_notify(void)
 {
 	uint8_t battery_level = bt_bas_get_battery_level();
@@ -928,6 +930,7 @@ static void bas_notify(void)
 
 	bt_bas_set_battery_level(battery_level);
 }
+#endif
 
 
 void main(void)
@@ -981,7 +984,9 @@ void main(void)
 			dk_set_led_off(ADV_STATUS_LED);
 		}
 		k_sleep(K_MSEC(ADV_LED_BLINK_INTERVAL));
+#if CONFIG_BT_BAS
 		/* Battery level simulation */
-		//bas_notify();
+		bas_notify();
+#endif
 	}
 }
