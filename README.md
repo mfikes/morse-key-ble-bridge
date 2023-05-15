@@ -9,7 +9,7 @@ To pair with a mobile device, choose _Morse Key BLE Bridge_ in the Bluetooth set
 
 [![Morse Key BLE Bridge Demo](http://img.youtube.com/vi/O0wdYhWQfyg/0.jpg)](http://www.youtube.com/watch?v=O0wdYhWQfyg "Morse Key BLE Bridge Demo")
 
-### Do not clone directly from git!
+## How to use
 
 This is a Zephyr-based firmware repo.
 Read the getting-started guide here: <https://docs.zephyrproject.org/latest/getting_started/index.html>
@@ -17,10 +17,7 @@ Read the getting-started guide here: <https://docs.zephyrproject.org/latest/gett
 This repo is using **Workflow 4: Application as the manifest repository**,
 as described in <https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.6.0/nrf/dm_adding_code.html#user-workflows>
 
-
-## How to use
-
-This repo is NOT to be cloned directy from git!
+This repo is not to be cloned directy from git!
 Use it with Zephyr's `west` metatool, e.g.:
 ```
 mkdir morse-key-ble-bridge
