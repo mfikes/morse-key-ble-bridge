@@ -60,3 +60,7 @@ For more information about `west`, see <https://docs.zephyrproject.org/1.14.0/gu
  # or
  west debug
  ```
+ 
+## License
+
+This project is derived from the Nordic HID keyboard sample app. The derivations are licensed under the MIT License. See the LICENSE file for more details.
