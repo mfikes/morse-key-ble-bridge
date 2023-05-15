@@ -3,7 +3,7 @@ Connect Morse key as a Bluetooth keyboard.
 
 This repo provides firmware that enables connecting a Morse key to your device as a keyboard, such as for use with the Morse Chat mobile app.
 
-To use, install the firmware on a Nordic nRF development board (e.g., nRF5340-DK). Pressing button one sends a space character to a paired Bluetooth device. Simply connect a Morse key (straight or keyer) to button one by soldering diagonal contacts, making it function as a low-resistance switch when keyed.
+To use, install the firmware on a Nordic nRF development board (e.g., nRF5340-DK). Pressing button one on the dev board sends a space character to a paired Bluetooth device. Simply connect a Morse key (straight or keyer) to button one by soldering diagonal contacts, making it function as a low-resistance switch when keyed.
 
 To pair with a mobile device, choose it in the Bluetooth settings and press button one (or activate the connected Morse key) when prompted.
 
