@@ -1,0 +1,31 @@
+manifest:
+  remotes:
+    - name: ncs
+      url-base: https://github.com/nrfconnect
+    - name: zephyrproject
+      url-base: https://github.com/zephyrproject-rtos
+
+
+  # Please add items below based on alphabetical order.
+  # These dependencies may need updating if new features are added to the firmware.
+  projects:
+    # For some weird reason, sdk-nrf needs to be first
+    - name: sdk-nrf
+      path: nrf
+      remote: ncs
+      revision: v2.1.0
+      import: true
+    # Make sure to keep hal_espressif revision in sync with zephyr/west.yaml
+    # We had to re-add it here, since NCS works with a whitelist (name-allowlist),
+    # which did not include hal_espressif
+    - name: hal_espressif
+      west-commands: west/west-commands.yml
+      remote: zephyrproject
+      revision: 90952df320f30c696ea73a22a0e50f20b8f94fd3
+      path: modules/hal/espressif
+    - name: hal_stm32
+      remote: zephyrproject
+      path: modules/hal_stm32
+
+  self:
+    path: morse-key-ble-bridge
