@@ -7,7 +7,7 @@ When the firmware is running on a Nordic nRF dev board (an nRF5340-DK, for examp
 
 In order to pair to mobile device, select it in the Bluetooth configuration, and then when prompted to pair, press button one (or activate your connected Morse key).
 
-[![Morse Key BLE Bridge Demo](http://img.youtube.com/vi/O0wdYhWQfyg/0.jpg)]([http://www.youtube.com/watch?v=piJPrP3BKIk](https://youtu.be/O0wdYhWQfyg) "Morse Key BLE Bridge Demo")
+[![Morse Key BLE Bridge Demo](http://img.youtube.com/vi/O0wdYhWQfyg/0.jpg)](http://www.youtube.com/watch?v=O0wdYhWQfyg "Morse Key BLE Bridge Demo")
 
 ### Do not clone directly from git!
 
