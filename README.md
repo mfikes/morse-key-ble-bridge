@@ -1,6 +1,14 @@
 # morse-key-ble-bridge
 Connect Morse key as a Bluetooth keyboard.
 
+This repo contains firmware meant to allow you to connect a Morse key as a keyboard to drive your device. For example, it can be used to connect to the Morse Chat mobile app running on a mobile phone.
+
+When the firmware is running on a Nordic nRF dev board (an nRF5340-DK, for example), then pressing button one will cause a space character to be sent to a paired Bluetooth device. With this setup, it is then a simple matter of connecting a Morse key (either a straight key, or a keyer) to button one by soldering the connections across the button one contacts so that whenever keyed, button one will effectively be closed (low resistance).
+
+In order to pair to mobile device, select it in the Bluetooth configuration, and then when prompted to pair, press button one (or activate your connected Morse key).
+
+See an [example demo](https://youtu.be/O0wdYhWQfyg) of this project.
+
 ### Do not clone directly from git!
 
 This is a Zephyr-based firmware repo.
