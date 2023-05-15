@@ -31,6 +31,9 @@
 
 #include "app_nfc.h"
 
+// Disable printk to avoid jitter
+#define printk(...) do {} while (0)
+
 #define DEVICE_NAME     CONFIG_BT_DEVICE_NAME
 #define DEVICE_NAME_LEN (sizeof(DEVICE_NAME) - 1)
 
@@ -38,8 +41,8 @@
 
 #define OUTPUT_REPORT_MAX_LEN            1
 #define OUTPUT_REPORT_BIT_MASK_CAPS_LOCK 0x02
-#define INPUT_REP_KEYS_REF_ID            1
-#define OUTPUT_REP_KEYS_REF_ID           1
+//#define INPUT_REP_KEYS_REF_ID            1
+//#define OUTPUT_REP_KEYS_REF_ID           1
 #define MODIFIER_KEY_POS                 0
 #define SHIFT_KEY_CODE                   0x02
 #define SCAN_CODE_POS                    2
@@ -133,15 +136,7 @@ static struct conn_mode {
 	bool in_boot_mode;
 } conn_mode[CONFIG_BT_HIDS_MAX_CLIENT_COUNT];
 
-static const uint8_t hello_world_str[] = {
-	0x0b,	/* Key h */
-	0x08,	/* Key e */
-	0x0f,	/* Key l */
-	0x0f,	/* Key l */
-	0x12,	/* Key o */
-	0x28,	/* Key Return */
-};
-
+static const uint8_t space_key[] = { 0x2c };
 static const uint8_t shift_key[] = { 225 };
 
 /* Current report status
@@ -239,6 +234,12 @@ static void pairing_process(struct k_work *work)
 	printk("Press Button 1 to confirm, Button 2 to reject.\n");
 }
 
+static struct bt_le_conn_param conn_param = {
+    .interval_min = 4,
+    .interval_max = 4,
+    .latency = 0,
+    .timeout = 400
+};
 
 static void connected(struct bt_conn *conn, uint8_t err)
 {
@@ -268,6 +269,9 @@ static void connected(struct bt_conn *conn, uint8_t err)
 			break;
 		}
 	}
+
+        // Update connection parameters
+        bt_conn_le_param_update(conn, &conn_param);
 
 #if CONFIG_NFC_OOB_PAIRING == 0
 	for (size_t i = 0; i < CONFIG_BT_HIDS_MAX_CLIENT_COUNT; i++) {
@@ -492,13 +496,13 @@ static void hid_init(void)
 	hids_inp_rep =
 		&hids_init_obj.inp_rep_group_init.reports[INPUT_REP_KEYS_IDX];
 	hids_inp_rep->size = INPUT_REPORT_KEYS_MAX_LEN;
-	hids_inp_rep->id = INPUT_REP_KEYS_REF_ID;
+	hids_inp_rep->id = 0; //INPUT_REP_KEYS_REF_ID;
 	hids_init_obj.inp_rep_group_init.cnt++;
 
 	hids_outp_rep =
 		&hids_init_obj.outp_rep_group_init.reports[OUTPUT_REP_KEYS_IDX];
 	hids_outp_rep->size = OUTPUT_REPORT_MAX_LEN;
-	hids_outp_rep->id = OUTPUT_REP_KEYS_REF_ID;
+	hids_outp_rep->id = 0; //OUTPUT_REP_KEYS_REF_ID;
 	hids_outp_rep->handler = hids_outp_rep_handler;
 	hids_init_obj.outp_rep_group_init.cnt++;
 
@@ -797,15 +801,10 @@ static int hid_buttons_release(const uint8_t *keys, size_t cnt)
 
 static void button_text_changed(bool down)
 {
-	static const uint8_t *chr = hello_world_str;
-
 	if (down) {
-		hid_buttons_press(chr, 1);
+		hid_buttons_press(space_key, 1);
 	} else {
-		hid_buttons_release(chr, 1);
-		if (++chr == (hello_world_str + sizeof(hello_world_str))) {
-			chr = hello_world_str;
-		}
+		hid_buttons_release(space_key, 1);
 	}
 }
 
@@ -983,6 +982,6 @@ void main(void)
 		}
 		k_sleep(K_MSEC(ADV_LED_BLINK_INTERVAL));
 		/* Battery level simulation */
-		bas_notify();
+		//bas_notify();
 	}
 }
