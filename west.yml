@@ -28,4 +28,4 @@ manifest:
       path: modules/hal_stm32
 
   self:
-    path: morse-key-ble-bridge
+    path: application

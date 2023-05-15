@@ -29,7 +29,7 @@ For more information about `west`, see <https://docs.zephyrproject.org/1.14.0/gu
 * `cd` to the application directory.
  _e.g._:
  ```
- cd /path/to/morse-key-ble-bridge/bridge/apps/bridge
+ cd /path/to/morse-key-ble-bridge/application/apps/bridge
  ```
 
 * Build using west. The first time, the board needs to specified:
