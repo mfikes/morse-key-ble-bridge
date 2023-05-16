@@ -236,6 +236,18 @@ static void pairing_process(struct k_work *work)
 	printk("Press Button 1 to confirm, Button 2 to reject.\n");
 }
 
+static void phy_update_callback(struct bt_conn *conn, struct bt_conn_le_phy_info *info)
+{
+
+
+    printk("PHY update: tx_phy %s, rx_phy %s\n",
+           (info->tx_phy == BT_HCI_LE_PHY_1M) ? "1M" :
+           (info->tx_phy == BT_HCI_LE_PHY_2M) ? "2M" : "Coded",
+           (info->rx_phy == BT_HCI_LE_PHY_1M) ? "1M" :
+           (info->rx_phy == BT_HCI_LE_PHY_2M) ? "2M" : "Coded");
+}
+
+
 static struct bt_le_conn_param conn_param = {
     .interval_min = 4,
     .interval_max = 4,
@@ -272,8 +284,15 @@ static void connected(struct bt_conn *conn, uint8_t err)
 		}
 	}
 
-        // Update connection parameters
-        bt_conn_le_param_update(conn, &conn_param);
+    // Update connection parameters
+    bt_conn_le_param_update(conn, &conn_param);
+
+    // Request 2M PHY connection
+    struct bt_conn_le_phy_param phy_param;
+    phy_param.pref_tx_phy = BT_HCI_LE_PHY_2M;
+    phy_param.pref_rx_phy = BT_HCI_LE_PHY_2M;
+    phy_param.options = BT_CONN_LE_PHY_OPT_NONE;
+    bt_conn_le_phy_update(conn, &phy_param);
 
 #if CONFIG_NFC_OOB_PAIRING == 0
 	for (size_t i = 0; i < CONFIG_BT_HIDS_MAX_CLIENT_COUNT; i++) {
@@ -349,6 +368,7 @@ BT_CONN_CB_DEFINE(conn_callbacks) = {
 	.connected = connected,
 	.disconnected = disconnected,
 	.security_changed = security_changed,
+    .le_phy_updated = phy_update_callback,
 };
 
 
