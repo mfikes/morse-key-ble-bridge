@@ -33,8 +33,8 @@
 
 #include "app_nfc.h"
 
-// Disable printk to avoid jitter
-#define printk(...) do {} while (0)
+// If needed, disable printk to avoid jitter
+//#define printk(...) do {} while (0)
 
 #define DEVICE_NAME     CONFIG_BT_DEVICE_NAME
 #define DEVICE_NAME_LEN (sizeof(DEVICE_NAME) - 1)
