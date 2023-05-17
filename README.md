@@ -1,7 +1,7 @@
 # morse-key-ble-bridge
 Connect Morse key as a Bluetooth keyboard.
 
-<img src="hero.jpg" width="400px" hspace="5px"/>
+<img src="hero.jpg" width="500px" hspace="5px"/>
 
 This repo provides firmware that enables connecting a Morse key to your device as a keyboard, such as for use with the Morse Chat mobile app.
 
