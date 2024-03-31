@@ -256,10 +256,10 @@ static void conn_param_updated(struct bt_conn *conn, uint16_t interval,
 }
 
 static struct bt_le_conn_param conn_param = {
-    .interval_min = 4,
-    .interval_max = 4,
+    .interval_min = 12,
+    .interval_max = 12,
     .latency = 0,
-    .timeout = 400
+    .timeout = 100
 };
 
 static void connected(struct bt_conn *conn, uint8_t err)
