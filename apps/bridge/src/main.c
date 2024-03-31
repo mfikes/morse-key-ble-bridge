@@ -251,8 +251,8 @@ static void conn_param_updated(struct bt_conn *conn, uint16_t interval,
                                uint16_t latency, uint16_t timeout)
 {
     printk("Connection parameters updated.\n");
-    printk("Interval: %f ms, Latency: %u, Timeout: %u ms\n",
-           interval * 1.25, latency, timeout * 10);
+    printk("Interval: %d * 1.25 ms, Latency: %u, Timeout: %u ms\n",
+           interval, latency, timeout * 10);
 }
 
 static struct bt_le_conn_param conn_param = {
