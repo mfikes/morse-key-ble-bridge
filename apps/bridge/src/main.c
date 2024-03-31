@@ -753,7 +753,7 @@ static int hid_kbd_state_key_set(uint8_t key)
 		hid_keyboard_state.ctrl_keys_state |= ctrl_mask;
 		return 0;
 	}
-	for (size_t i = 0; i < KEY_CTRL_CODE_MAX; ++i) {
+	for (size_t i = 0; i < KEY_PRESS_MAX; ++i) {
 		if (hid_keyboard_state.keys_state[i] == 0) {
 			hid_keyboard_state.keys_state[i] = key;
 			return 0;
@@ -772,7 +772,7 @@ static int hid_kbd_state_key_clear(uint8_t key)
 		hid_keyboard_state.ctrl_keys_state &= ~ctrl_mask;
 		return 0;
 	}
-	for (size_t i = 0; i < KEY_CTRL_CODE_MAX; ++i) {
+	for (size_t i = 0; i < KEY_PRESS_MAX; ++i) {
 		if (hid_keyboard_state.keys_state[i] == key) {
 			hid_keyboard_state.keys_state[i] = 0;
 			return 0;
@@ -961,7 +961,7 @@ static void bas_notify(void)
 #endif
 
 
-void main(void)
+int main(void)
 {
 	int err;
 	int blink_status = 0;
@@ -973,24 +973,24 @@ void main(void)
 	err = bt_conn_auth_cb_register(&conn_auth_callbacks);
 	if (err) {
 		printk("Failed to register authorization callbacks.\n");
-		return;
+		return 0;
 	}
 
 	err = bt_conn_auth_info_cb_register(&conn_auth_info_callbacks);
 	if (err) {
 		printk("Failed to register authorization info callbacks.\n");
-		return;
+		return 0;
 	}
+
+	hid_init();
 
 	err = bt_enable(NULL);
 	if (err) {
 		printk("Bluetooth init failed (err %d)\n", err);
-		return;
+		return 0;
 	}
 
 	printk("Bluetooth initialized\n");
-
-	hid_init();
 
 	if (IS_ENABLED(CONFIG_SETTINGS)) {
 		settings_load();
