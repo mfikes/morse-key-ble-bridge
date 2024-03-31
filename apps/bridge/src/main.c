@@ -247,6 +247,13 @@ static void phy_update_callback(struct bt_conn *conn, struct bt_conn_le_phy_info
            (info->rx_phy == BT_HCI_LE_PHY_2M) ? "2M" : "Coded");
 }
 
+static void conn_param_updated(struct bt_conn *conn, uint16_t interval,
+                               uint16_t latency, uint16_t timeout)
+{
+    printk("Connection parameters updated.\n");
+    printk("Interval: %f ms, Latency: %u, Timeout: %u ms\n",
+           interval * 1.25, latency, timeout * 10);
+}
 
 static struct bt_le_conn_param conn_param = {
     .interval_min = 4,
@@ -369,6 +376,7 @@ BT_CONN_CB_DEFINE(conn_callbacks) = {
 	.disconnected = disconnected,
 	.security_changed = security_changed,
     .le_phy_updated = phy_update_callback,
+    .le_param_updated = conn_param_updated,
 };
 
 
