@@ -287,9 +287,6 @@ static void connected(struct bt_conn *conn, uint8_t err)
     // Update connection parameters
     bt_conn_le_param_update(conn, BT_LE_CONN_PARAM(12, 12, 0, 100));
 
-    // Request 2M PHY connection
-    bt_conn_le_phy_update(conn, BT_CONN_LE_PHY_PARAM_ALL);
-
 #if CONFIG_NFC_OOB_PAIRING == 0
 	for (size_t i = 0; i < CONFIG_BT_HIDS_MAX_CLIENT_COUNT; i++) {
 		if (!conn_mode[i].conn) {
