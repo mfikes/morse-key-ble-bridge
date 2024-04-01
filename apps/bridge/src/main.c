@@ -255,13 +255,6 @@ static void conn_param_updated(struct bt_conn *conn, uint16_t interval,
            interval, latency, timeout * 10);
 }
 
-static struct bt_le_conn_param conn_param = {
-    .interval_min = 12,
-    .interval_max = 12,
-    .latency = 0,
-    .timeout = 100
-};
-
 static void connected(struct bt_conn *conn, uint8_t err)
 {
 	char addr[BT_ADDR_LE_STR_LEN];
@@ -292,14 +285,10 @@ static void connected(struct bt_conn *conn, uint8_t err)
 	}
 
     // Update connection parameters
-    bt_conn_le_param_update(conn, &conn_param);
+    bt_conn_le_param_update(conn, BT_LE_CONN_PARAM(12, 12, 0, 100));
 
     // Request 2M PHY connection
-    struct bt_conn_le_phy_param phy_param;
-    phy_param.pref_tx_phy = BT_HCI_LE_PHY_2M;
-    phy_param.pref_rx_phy = BT_HCI_LE_PHY_2M;
-    phy_param.options = BT_CONN_LE_PHY_OPT_NONE;
-    bt_conn_le_phy_update(conn, &phy_param);
+    bt_conn_le_phy_update(conn, BT_CONN_LE_PHY_PARAM_ALL);
 
 #if CONFIG_NFC_OOB_PAIRING == 0
 	for (size_t i = 0; i < CONFIG_BT_HIDS_MAX_CLIENT_COUNT; i++) {
