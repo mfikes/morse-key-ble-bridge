@@ -138,7 +138,8 @@ static struct conn_mode {
 	bool in_boot_mode;
 } conn_mode[CONFIG_BT_HIDS_MAX_CLIENT_COUNT];
 
-static const uint8_t space_key[] = { 0x2c };
+//static const uint8_t space_key[] = { 0x2c };
+static const uint8_t left_bracket_key[] = { 0x2f };
 static const uint8_t shift_key[] = { 225 };
 
 /* Current report status
@@ -818,9 +819,9 @@ static int hid_buttons_release(const uint8_t *keys, size_t cnt)
 static void button_text_changed(bool down)
 {
 	if (down) {
-		hid_buttons_press(space_key, 1);
+		hid_buttons_press(left_bracket_key, 1);
 	} else {
-		hid_buttons_release(space_key, 1);
+		hid_buttons_release(left_bracket_key, 1);
 	}
 }
 
@@ -865,7 +866,7 @@ static void num_comp_reply(bool accept)
 static void button_changed(uint32_t button_state, uint32_t has_changed)
 {
 	static bool pairing_button_pressed;
-
+	
 	uint32_t buttons = button_state & has_changed;
 
 	if (k_msgq_num_used_get(&mitm_queue)) {
